@@ -1,4 +1,4 @@
-# fruit
+# Favorite Fruit
 
 ## Build Setup
 
