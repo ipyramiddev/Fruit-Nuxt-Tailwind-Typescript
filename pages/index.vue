@@ -1,15 +1,15 @@
 <template>
   <div class="bg-[#0F172A] p-8 h-full w-full">
-    <div class="flex gap-8 p-2 bg-[#1E293B] text-center rounded-xl my-2">
+    <div class="flex gap-8 py-2 px-8 bg-[#1E293B] text-center rounded-xl my-2">
       <div>
-        <label class="pr-4 text-white"> Fruite name: </label>
+        <label class="pr-4 text-white"> Fruit name: </label>
         <input type="text" placeholder="Enter the fruit name" v-model="filterOption.name" class="outline-none bg-transparent text-white border-[1px] border-gray-500 rounded p-1" />
       </div>
       <div>
-        <label class="pr-4 text-white"> Fruite family: </label>
+        <label class="pr-4 text-white"> Fruit family: </label>
         <input type="text" placeholder="Enter the fruit family" v-model="filterOption.family" class="outline-none bg-transparent text-white border-[1px] border-gray-500 rounded p-1" />
       </div>
-      <div>
+      <div class="flex items-center">
         <label class="pr-4 text-white"> Favorite: </label>
         <input type="checkbox" v-model="filterByFavo">
       </div>
@@ -18,10 +18,10 @@
       <thead class="text-white border-b-2 border-[#0F172A]">
         <tr>
           <th class="w-1/12 p-4">id</th>
-          <th class="w-1/12">Genus</th>
-          <th class="w-1/12">Name</th>
-          <th class="w-1/12">Family</th>
-          <th class="w-1/12">Order</th>
+          <th class="w-1/12 text-left">Genus</th>
+          <th class="w-1/12 text-left">Name</th>
+          <th class="w-1/12 text-left">Family</th>
+          <th class="w-1/12 text-left">Order</th>
           <th class="w-1/2">Nutritions</th>
           <th class="w-1/12">Favorite</th>
         </tr>
@@ -29,23 +29,25 @@
       <tbody v-for="(fruit, index) in filteredFruits" :key = "index">
         <tr class="text-[#8492A7]">
           <td class="p-2 text-[#975280]">{{ fruit.id }}</td>
-          <td>{{ fruit.genus }}</td>
-          <td>{{ fruit.name }}</td>
-          <td>{{ fruit.family }}</td>
-          <td>{{ fruit.order_name }}</td>
+          <td class="text-left">{{ fruit.genus }}</td>
+          <td class="text-left">{{ fruit.name }}</td>
+          <td class="text-left">{{ fruit.family }}</td>
+          <td class="text-left">{{ fruit.order_name }}</td>
           <td>
-            <div class="flex justify-between px-2">
-              <div>
+            <div class="flex px-2 text-left w-full">
+              <div class="text-left w-1/6">
                 Calories: {{ fruit.nutritions.calories }}
               </div>
+              <div class="text-left w-2/6">
                 Carbohydrates: {{ fruit.nutritions.carbohydrates }}
-              <div>
+              </div>
+              <div class="text-left w-1/6">
                 Fat: {{ fruit.nutritions.fat }}
               </div>
-              <div>
+              <div class="text-left w-1/6">
                 Protein: {{ fruit.nutritions.protein }}
               </div>
-              <div>
+              <div class="text-left w-1/6">
                 Sugar: {{ fruit.nutritions.sugar }}
               </div>
             </div>
@@ -143,7 +145,7 @@ export default Vue.extend({
   },
   computed: {
     filteredFruits() {
-      return this.fruits.filter((fruit) => {
+      return this.fruits.filter((fruit : any) => {
         return fruit.name.includes(this.filterOption.name) && fruit.family.includes(this.filterOption.family) && (this.filterByFavo && this.favoFruits.indexOf(fruit.name) !== -1 || this.filterByFavo === false)
       })
     }
@@ -180,7 +182,7 @@ export default Vue.extend({
     favoFruits: {
       handler: function (newVal) {
         if (newVal.length > 10) {
-          alert("hey, stop");
+          alert("Hey, stop! You can't select over 10 as favorite.");
           this.favoFruits.pop()
         }
       }
